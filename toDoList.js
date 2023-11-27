@@ -16,9 +16,9 @@
  *  -- create item for the list.) 
  */
 class Todo {
-   constructor(){}
-   // adds to list 
-   add(inputText){
+  constructor() { }
+  // adds to list 
+  add(inputText) {
     let ul = document.getElementsByClassName("today-list")[0]
     console.log(ul)
     let li = document.createElement("li")
@@ -30,41 +30,54 @@ class Todo {
     a.innerHTML = "Delete"
     a.setAttribute("class", "delete")
     ul.appendChild(li)
-    span.addEventListener('click', (event)=>{
-      console.log(event.target.tagName ,'tagname')
-      if(event.target.tagName == "SPAN"){  
+    span.addEventListener('click', (event) => {
+      console.log(event.target.tagName, 'tagname')
+      if (event.target.tagName == "SPAN") {
         this.markDone(event.target) //might have to bind this
       }
     })
-    a.addEventListener('click', (event)=>{
-      if(event.target.tagName == "A"){ 
-      this.removeElement( event.target)///this.removeElement(event.target) //might have to bind this
+    a.addEventListener('click', (event) => {
+      if (event.target.tagName == "A") {
+        this.removeElement(event.target)///this.removeElement(event.target) //might have to bind this
       }
     })
-   }
-   // removes from list going to be <a>
-   removeElement(element){
-     let li = element.parentNode
-     console.log(li, 'li')
-     console.log(li.parentElement, li.parentNode)
-     li.parentNode.removeChild(li)
+  }
 
-   }
-   // marks it as done
-   markDone(elementLI){
+  addListeners(element) {
+    element.addEventListener('click', (event) => {
+      if (event.target.tagName == "A") {
+        this.removeElement(event.target)
+
+      }
+      if (event.target.tagName == "SPAN") {
+        this.markDone(event.target) //might have to bind this
+      }
+    })
+  }
+  // removes from list going to be <a>
+  removeElement(element) {
+    let li = element.parentNode
+    console.log(li, 'li')
+    console.log(li.parentElement, li.parentNode)
+    li.parentNode.removeChild(li)
+
+  }
+  // marks it as done
+  markDone(elementLI) {
     elementLI = elementLI.parentNode
-    if(elementLI.getAttribute("class") == "done"){
+    if (elementLI.getAttribute("class") == "done") {
       elementLI.setAttribute("class", "")
     }
-    else{
+    else {
       elementLI.setAttribute("class", "done")
     }
-      
-   }
+
+  }
 }
 let todo = new Todo()
-
-const addListItem = function(e) {
+todo.addListeners(document.querySelector("body > main > ul > li:nth-child(1)"))
+todo.addListeners(document.querySelector("body > main > ul > li:nth-child(1) > a"))
+const addListItem = function (e) {
   e.preventDefault();
   const add = document.getElementsByClassName("add-item")[0]
   const input = this.parentNode.getElementsByTagName('input')[0];
@@ -74,4 +87,4 @@ const addListItem = function(e) {
 const add = document.getElementsByClassName("add-item")[0]
 add.addEventListener('click', addListItem)
 
-  // Finish function here
+// Finish function here
